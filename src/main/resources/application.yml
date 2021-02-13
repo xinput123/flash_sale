@@ -1,0 +1,45 @@
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+  datasource: # druid
+    url: jdbc:mysql://127.0.0.1:3306/miaosha?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 2
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20a
+#mybatis
+mybatis:
+  type-aliases-package: com.flash.sale.domain
+  mapper-locations: classpath:com/flash/sale/dao/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 10
+    default-statement-timeout: 3000
+
+redis:
+  host: 47.94.82.159
+  port: 6379
+  timeout: 3
+  password: wangdpwin
+  poolMaxTotal: 10
+  poolMaxIdle: 10
+  poolMaxWait: 3
