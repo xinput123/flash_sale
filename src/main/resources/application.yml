@@ -1,4 +1,14 @@
 spring:
+  # spring 对静态资源处理
+  resources:
+    add-mappings: true
+    cache-period: 3600
+    chain:
+      cache: true
+      enabled: true
+      gzipped: true
+      html-application-cache: true
+    static-locations: classpath:/static/
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
