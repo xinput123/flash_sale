@@ -2,13 +2,14 @@ package com.flash.sale.dao;
 
 import com.flash.sale.domain.MiaoshaOrder;
 import com.flash.sale.domain.OrderInfo;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.springframework.stereotype.Repository;
 
-@Mapper
+@Repository
 public interface OrderDao {
 
   @Select("select * from miaosha_order where user_id=#{userId} and goods_id=#{goodsId}")
@@ -24,4 +25,12 @@ public interface OrderDao {
 
   @Select("select * from order_info where id = #{orderId}")
   OrderInfo getOrderById(@Param("orderId") long orderId);
+
+  @Delete("delete from order_info")
+  void deleteOrders();
+
+  @Delete("delete from miaosha_order")
+  void deleteMiaoshaOrders();
+
+
 }

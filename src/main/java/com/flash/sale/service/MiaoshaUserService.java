@@ -23,10 +23,10 @@ public class MiaoshaUserService {
   public static final String COOKI_NAME_TOKEN = "token";
 
   @Autowired
-  MiaoshaUserDao miaoshaUserDao;
+  private MiaoshaUserDao miaoshaUserDao;
 
   @Autowired
-  RedisService redisService;
+  private RedisService redisService;
 
   public MiaoshaUser getById(long id) {
     //取缓存
@@ -42,6 +42,7 @@ public class MiaoshaUserService {
     return user;
   }
 
+  // http://blog.csdn.net/tTU1EvLDeLFq5btqiK/article/details/78693323
   public boolean updatePassword(String token, long id, String formPass) {
     //取user
     MiaoshaUser user = getById(id);

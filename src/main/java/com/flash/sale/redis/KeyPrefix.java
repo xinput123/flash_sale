@@ -2,8 +2,8 @@ package com.flash.sale.redis;
 
 public interface KeyPrefix {
 
-  int expireSeconds();
+  public int expireSeconds();
 
-  String getPrefix();
+  public String getPrefix();
 
 }

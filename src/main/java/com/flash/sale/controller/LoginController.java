@@ -1,6 +1,5 @@
 package com.flash.sale.controller;
 
-import com.flash.sale.redis.RedisService;
 import com.flash.sale.result.Result;
 import com.flash.sale.service.MiaoshaUserService;
 import com.flash.sale.vo.LoginVo;
@@ -18,13 +17,10 @@ import javax.validation.Valid;
 @RequestMapping("/login")
 public class LoginController {
 
-  private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+  private static Logger log = LoggerFactory.getLogger(LoginController.class);
 
   @Autowired
-  MiaoshaUserService userService;
-
-  @Autowired
-  RedisService redisService;
+  private MiaoshaUserService userService;
 
   @RequestMapping("/to_login")
   public String toLogin() {
@@ -34,7 +30,7 @@ public class LoginController {
   @RequestMapping("/do_login")
   @ResponseBody
   public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
-    logger.info(loginVo.toString());
+    log.info(loginVo.toString());
     //登录
     String token = userService.login(response, loginVo);
     return Result.success(token);

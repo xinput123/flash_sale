@@ -3,6 +3,7 @@ package com.flash.sale.controller;
 import com.flash.sale.domain.User;
 import com.flash.sale.redis.RedisService;
 import com.flash.sale.redis.UserKey;
+import com.flash.sale.result.CodeMsg;
 import com.flash.sale.result.Result;
 import com.flash.sale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SampleController {
 
   @Autowired
-  UserService userService;
+  private UserService userService;
 
   @Autowired
-  RedisService redisService;
+  private RedisService redisService;
 
-  @RequestMapping("/thymeleaf")
-  public String thymeleaf(Model model) {
-    model.addAttribute("name", "xinput");
+  @RequestMapping("/hello")
+  @ResponseBody
+  public Result<String> home() {
+    return Result.success("Hello，world");
+  }
+
+  @RequestMapping("/error")
+  @ResponseBody
+  public Result<String> error() {
+    return Result.error(CodeMsg.SESSION_ERROR);
+  }
+
+  @RequestMapping("/hello/themaleaf")
+  public String themaleaf(Model model) {
+    model.addAttribute("name", "Joshua");
     return "hello";
   }
 
@@ -33,6 +46,7 @@ public class SampleController {
     User user = userService.getById(1);
     return Result.success(user);
   }
+
 
   @RequestMapping("/db/tx")
   @ResponseBody
@@ -57,4 +71,6 @@ public class SampleController {
     redisService.set(UserKey.getById, "" + 1, user);//UserKey:id1
     return Result.success(true);
   }
+
+
 }

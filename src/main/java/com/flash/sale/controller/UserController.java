@@ -2,18 +2,15 @@ package com.flash.sale.controller;
 
 import com.flash.sale.domain.MiaoshaUser;
 import com.flash.sale.result.Result;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
   @RequestMapping("/info")
-  @ResponseBody
-  public Result<MiaoshaUser> info(Model model, MiaoshaUser user) {
+  public Result<MiaoshaUser> info(MiaoshaUser user) {
     return Result.success(user);
   }
 

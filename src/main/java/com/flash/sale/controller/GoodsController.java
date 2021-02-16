@@ -28,36 +28,36 @@ import java.util.List;
 public class GoodsController {
 
   @Autowired
-  MiaoshaUserService userService;
+  private MiaoshaUserService userService;
 
   @Autowired
-  RedisService redisService;
+  private RedisService redisService;
 
   @Autowired
-  GoodsService goodsService;
+  private GoodsService goodsService;
 
   @Autowired
-  ApplicationContext applicationContext;
+  private ThymeleafViewResolver thymeleafViewResolver;
 
   @Autowired
-  ThymeleafViewResolver thymeleafViewResolver;
+  private ApplicationContext applicationContext;
 
+  /**
+   * QPS:1267 load:15 mysql
+   * 5000 * 10
+   * QPS:2884, load:5
+   */
   @RequestMapping(value = "/to_list", produces = "text/html")
   @ResponseBody
   public String list(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user) {
     model.addAttribute("user", user);
-    //取缓存
-    String html = redisService.get(GoodsKey.getGoodsList, "", String.class);
-    if (!StringUtils.isEmpty(html)) {
-      return html;
-    }
     List<GoodsVo> goodsList = goodsService.listGoodsVo();
     model.addAttribute("goodsList", goodsList);
 //    	 return "goods_list";
     SpringWebContext ctx = new SpringWebContext(request, response,
         request.getServletContext(), request.getLocale(), model.asMap(), applicationContext);
     //手动渲染
-    html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
+    String html = thymeleafViewResolver.getTemplateEngine().process("goods_list", ctx);
     if (!StringUtils.isEmpty(html)) {
       redisService.set(GoodsKey.getGoodsList, "", html);
     }
@@ -110,7 +110,8 @@ public class GoodsController {
 
   @RequestMapping(value = "/detail/{goodsId}")
   @ResponseBody
-  public Result<GoodsDetailVo> detail(MiaoshaUser user, @PathVariable("goodsId") long goodsId) {
+  public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
+                                      @PathVariable("goodsId") long goodsId) {
     GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
     long startAt = goods.getStartDate().getTime();
     long endAt = goods.getEndDate().getTime();
@@ -134,4 +135,6 @@ public class GoodsController {
     vo.setMiaoshaStatus(miaoshaStatus);
     return Result.success(vo);
   }
+
+
 }

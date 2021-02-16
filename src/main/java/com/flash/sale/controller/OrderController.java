@@ -2,11 +2,9 @@ package com.flash.sale.controller;
 
 import com.flash.sale.domain.MiaoshaUser;
 import com.flash.sale.domain.OrderInfo;
-import com.flash.sale.redis.RedisService;
 import com.flash.sale.result.CodeMsg;
 import com.flash.sale.result.Result;
 import com.flash.sale.service.GoodsService;
-import com.flash.sale.service.MiaoshaUserService;
 import com.flash.sale.service.OrderService;
 import com.flash.sale.vo.GoodsVo;
 import com.flash.sale.vo.OrderDetailVo;
@@ -22,16 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class OrderController {
 
   @Autowired
-  MiaoshaUserService userService;
+  private OrderService orderService;
 
   @Autowired
-  RedisService redisService;
-
-  @Autowired
-  OrderService orderService;
-
-  @Autowired
-  GoodsService goodsService;
+  private GoodsService goodsService;
 
   @RequestMapping("/detail")
   @ResponseBody
